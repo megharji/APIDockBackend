@@ -1,6 +1,5 @@
 const requestModel = require("../models/requestModel");
 const axios = require("axios");
-const historyModel = require("../models/historyModel");
 
 const saveRequest = async (req, res) => {
   try {
@@ -140,8 +139,7 @@ const deleteRequest = async (req, res) => {
 
 const executeRequest = async (req, res) => {
   try {
-    const userId = req.user.id;
-    const { request_id = null, method, url, headers = {}, body = {} } = req.body;
+    const { method, url, headers = {}, body = {} } = req.body;
 
     const response = await axios({
       method: method.toLowerCase(),
@@ -150,15 +148,6 @@ const executeRequest = async (req, res) => {
       data: body,
       validateStatus: () => true,
     });
-
-    await historyModel.createHistory(
-      userId,
-      request_id,
-      method.toUpperCase(),
-      url,
-      response.status,
-      response.data
-    );
 
     return res.status(200).json({
       success: true,
@@ -177,6 +166,7 @@ const executeRequest = async (req, res) => {
     });
   }
 };
+
 module.exports = {
   saveRequest,
   filterRequests,

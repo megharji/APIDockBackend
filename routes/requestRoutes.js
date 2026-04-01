@@ -16,11 +16,6 @@ router.post("/createRequest", authMiddleware, validate(createRequestSchema), sav
 router.post("/filterRequest", authMiddleware, filterRequests);
 router.put("/updateRequest", authMiddleware, validate(updateRequestSchema), updateRequest);
 router.delete("/deleteRequest", authMiddleware, deleteRequest);
-router.post(
-  "/executeRequest",
-  authMiddleware,
-  validate(executeRequestSchema),
-  executeRequest
-);
+router.post("/executeRequest",authMiddleware,validate(executeRequestSchema),executeRequest);
 
 module.exports = router;

@@ -6,7 +6,6 @@ const authRoutes = require("./routes/authRoutes");  // 👈 import
 const userRoutes = require("./routes/userRoutes");
 const requestRoutes = require("./routes/requestRoutes");
 const collectionsRoutes = require("./routes/collectionRoutes");
-const historyRoutes = require("./routes/historyRoutes");
 
 const initDb  = require("./models/index");
 

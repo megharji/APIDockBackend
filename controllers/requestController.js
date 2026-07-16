@@ -1,5 +1,6 @@
 const requestModel = require("../models/requestModel");
 const axios = require("axios");
+const { analyzeApiResponse } = require("../services/geminiService");
 
 const saveRequest = async (req, res) => {
   try {
@@ -8,8 +9,8 @@ const saveRequest = async (req, res) => {
 
     const result = await requestModel.createRequest(
       userId,
+      collection_id,
       title,
-        collection_id,
       method.toUpperCase(),
       url,
       headers,
@@ -167,10 +168,36 @@ const executeRequest = async (req, res) => {
   }
 };
 
+const analyzeResponse = async (req, res) => {
+  try {
+    const { method, url, requestBody, response } = req.body;
+
+    if (!response || !method || !url) {
+      return res.status(400).json({
+        success: false,
+        message: "method, url, and response are required",
+      });
+    }
+
+    const analysis = await analyzeApiResponse({ method, url, requestBody, response });
+
+    return res.status(200).json({
+      success: true,
+      analysis,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   saveRequest,
   filterRequests,
   updateRequest,
   deleteRequest,
-  executeRequest
+  executeRequest,
+  analyzeResponse,
 };

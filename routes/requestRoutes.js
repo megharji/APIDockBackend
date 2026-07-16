@@ -9,7 +9,8 @@ const {
   filterRequests,
   updateRequest,
   deleteRequest,
-  executeRequest
+  executeRequest,
+  analyzeResponse,
 } = require("../controllers/requestController");
 
 router.post("/createRequest", authMiddleware, validate(createRequestSchema), saveRequest);
@@ -17,5 +18,6 @@ router.post("/filterRequest", authMiddleware, filterRequests);
 router.put("/updateRequest", authMiddleware, validate(updateRequestSchema), updateRequest);
 router.delete("/deleteRequest", authMiddleware, deleteRequest);
 router.post("/executeRequest",authMiddleware,validate(executeRequestSchema),executeRequest);
+router.post("/analyzeResponse", authMiddleware, analyzeResponse);
 
 module.exports = router;

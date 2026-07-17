@@ -11,7 +11,14 @@ const initDb  = require("./models/index");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    "https://apidockfrontend.onrender.com",
+    "http://localhost:5173",
+    "http://localhost:3000",
+  ],
+  credentials: true,
+}));
 app.use(express.json());
 
 app.get("/", (req, res) => {
